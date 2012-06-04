@@ -121,14 +121,21 @@ endif
 ifdef AP_CONFIG_DRIVER_WILINK
 TI_HOSTAPD_LIB = y
 AP_CFLAGS += -DCONFIG_DRIVER_WILINK
-C_INCLUDES += \
-	hardware/ti/wlan/$(BOARD_SOFTAP_DEVICE)_softAP/stad/Export_Inc \
-	hardware/ti/wlan/$(BOARD_SOFTAP_DEVICE)_softAP/utils \
-	hardware/ti/wlan/$(BOARD_SOFTAP_DEVICE)_softAP/platforms/os/linux/inc
+
+  ifneq ($(BOARD_HOSTAPD_TIAP_ROOT),)
+      TIAP_ROOT := $(BOARD_HOSTAPD_TIAP_ROOT)
+  else
+      TIAP_ROOT := hardware/ti/wlan/$(BOARD_SOFTAP_DEVICE)_softAP
+  endif
+
+  C_INCLUDES += \
+      ${TIAP_ROOT}/stad/Export_Inc \
+      ${TIAP_ROOT}/utils \
+      ${TIAP_ROOT}/platforms/os/linux/inc
 
 AP_CONFIG_L2_PACKET=linux
 OBJS += hostapd/regulatory.c
-OBJS += hostapd/driver_wilink.c 
+OBJS += hostapd/driver_wilink.c
 endif
 
 ifdef AP_CONFIG_DRIVER_WIRED
