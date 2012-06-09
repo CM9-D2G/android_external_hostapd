@@ -1624,6 +1624,9 @@ static int setup_interface(struct hostapd_iface *iface)
 	prev_addr = hapd->own_addr;
 
 	for (j = 0; j < iface->num_bss; j++) {
+
+                wpa_printf(MSG_DEBUG, "%s: setup bss %d/%d...", __FUNCTION__, (j+1), iface->num_bss);
+
 		hapd = iface->bss[j];
 		if (j)
 			os_memcpy(hapd->own_addr, prev_addr, ETH_ALEN);
@@ -1632,6 +1635,8 @@ static int setup_interface(struct hostapd_iface *iface)
 		if (hostapd_mac_comp_empty(hapd->conf->bssid) == 0)
 			prev_addr = hapd->own_addr;
 	}
+
+        wpa_printf(MSG_DEBUG, "%s: setup bss done", __FUNCTION__);
 
 	hostapd_tx_queue_params(iface);
 

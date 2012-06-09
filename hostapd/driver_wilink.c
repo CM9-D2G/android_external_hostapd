@@ -153,6 +153,7 @@ static void wilink_rx_mgmt(void *ctx, const u8 *src_addr, const u8 *data, size_t
 
 	wpa_printf(MSG_VERBOSE, "%s: received MGMT with len %d from " MACSTR, __func__,
 			(int) len, MAC2STR(src_addr));
+
 	wpa_hexdump(MSG_VERBOSE, "MGMT", data, data_len);
 	wpa_printf(MSG_VERBOSE,"\n");
 
