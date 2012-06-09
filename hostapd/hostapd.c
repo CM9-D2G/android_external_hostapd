@@ -1337,7 +1337,7 @@ static int hostapd_setup_bss(struct hostapd_data *hapd, int first)
 	}
 
 	if (!hostapd_drv_none(hapd)) {
-		wpa_printf(MSG_ERROR, "Using interface %s with hwaddr " MACSTR
+		wpa_printf(MSG_INFO, "Using interface %s with hwaddr " MACSTR
 			   " and ssid '%s'",
 			   hapd->conf->iface, MAC2STR(hapd->own_addr),
 			   hapd->conf->ssid.ssid);
@@ -2103,7 +2103,7 @@ int main(int argc, char *argv[])
 
 	/* Initialize interfaces */
 	for (i = 0; i < interfaces.count; i++) {
-		wpa_printf(MSG_ERROR, "Configuration file: %s",
+		wpa_printf(MSG_INFO, "Configuration file: %s",
 			   argv[optind + i]);
 
 		interfaces.iface[i] = os_zalloc(sizeof(struct hostapd_iface));

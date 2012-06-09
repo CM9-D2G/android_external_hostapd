@@ -151,10 +151,10 @@ static void wilink_rx_mgmt(void *ctx, const u8 *src_addr, const u8 *data, size_t
 	buf = ((u8*) data) + sizeof(TApFrameHeader);
 	/* 'len' and 'buf' now refer to the actual frame less the WILINK hdr */
 
-	wpa_printf(MSG_DEBUG, "%s: received MGMT with len %d from " MACSTR, __func__,
+	wpa_printf(MSG_VERBOSE, "%s: received MGMT with len %d from " MACSTR, __func__,
 			(int) len, MAC2STR(src_addr));
-	wpa_hexdump(MSG_DEBUG, "MGMT", data, data_len);
-    wpa_printf(MSG_DEBUG,"\n");
+	wpa_hexdump(MSG_VERBOSE, "MGMT", data, data_len);
+	wpa_printf(MSG_VERBOSE,"\n");
 
 	hdr = (struct ieee80211_hdr *) buf;
 	fc = le_to_host16(hdr->frame_control);
@@ -162,37 +162,35 @@ static void wilink_rx_mgmt(void *ctx, const u8 *src_addr, const u8 *data, size_t
 	type = WLAN_FC_GET_TYPE(fc);
 	stype = WLAN_FC_GET_STYPE(fc);
 
-    if (type != WLAN_FC_TYPE_MGMT) {
+	if (type != WLAN_FC_TYPE_MGMT) {
 		wpa_printf(MSG_ERROR, "HAPDTIERR %s: frame is not mgmt frame", __func__);
 		return;
 	}
 
-	switch (((TApFrameHeader*)data)->sCtrlHdr) { 
+	switch (((TApFrameHeader*)data)->sCtrlHdr) {
 	case AP_CTRL_HDR_RX:
-		wpa_printf(MSG_DEBUG, "HAPDTI %s: processing management frame", __func__);
+		wpa_printf(MSG_VERBOSE, "HAPDTI %s: processing management frame", __func__);
 		memset(&fi, 0, sizeof(struct hostapd_frame_info));
 		fi.phytype = 7;
 		ieee802_11_mgmt(hapd, buf, len, stype, &fi);
 		break;
-    case AP_CTRL_HDR_TX_SUCCESS: 		/* successful TX Complete event */
-        wpa_printf(MSG_DEBUG, "HAPDTI %s: GET TX SUCCSESS", __func__);
+	case AP_CTRL_HDR_TX_SUCCESS: 		/* successful TX Complete event */
+		wpa_printf(MSG_DEBUG, "HAPDTI %s: GET TX SUCCSESS", __func__);
 		wilink_tx_callback(hapd, buf, len, 1);
 		return;
-    case AP_CTRL_HDR_TX_FAIL: 			/* fail TX Complete event */
-        wpa_printf(MSG_DEBUG, "HAPDTI %s: GET TX FAIL", __func__);
+	case AP_CTRL_HDR_TX_FAIL: 			/* fail TX Complete event */
+		wpa_printf(MSG_DEBUG, "HAPDTI %s: GET TX FAIL", __func__);
 		wilink_tx_callback(hapd, buf, len, 0);
 		return;
 	}
 
-    sta = ap_get_sta(hapd,  hdr->addr2);
-    if (!sta) {
-        wpa_printf(MSG_ERROR,"station is not found" MACSTR, MAC2STR(hdr->addr2));
-    }
-    else {
-        sta->flags |= WLAN_STA_AUTH;
-    }
-
-
+	sta = ap_get_sta(hapd,  hdr->addr2);
+	if (!sta) {
+		wpa_printf(MSG_VERBOSE,"station is not found " MACSTR, MAC2STR(hdr->addr2));
+	}
+	else {
+		sta->flags |= WLAN_STA_AUTH;
+	}
 }
 
 #ifndef ANDROID

@@ -60,8 +60,32 @@ void wpa_debug_print_timestamp(void);
  *
  * Note: New line '\n' is added to the end of the text when printing to stdout.
  */
+#ifdef ANDROID_LOG
+
+#ifndef LOG_TAG
+#define LOG_TAG "hostapd"
+#endif
+
+#include <android/log.h>
+
+#define MSG_VERBOSE ANDROID_LOG_VERBOSE
+#define MSG_DEBUG   ANDROID_LOG_DEBUG
+#define MSG_INFO    ANDROID_LOG_INFO
+#define MSG_WARNING ANDROID_LOG_WARN
+#define MSG_ERROR   ANDROID_LOG_ERROR
+
+#define wpa_printf(lvl,...) __android_log_print(lvl, LOG_TAG, ## __VA_ARGS__)
+#define perror(msg) android_perror(msg)
+void android_perror(const char* msg);
+
+#else /* ANDROID_LOG */
+
+#define MSG_VERBOSE MSG_DEBUG
+
 void wpa_printf(int level, char *fmt, ...)
 PRINTF_FORMAT(2, 3);
+
+#endif
 
 /**
  * wpa_hexdump - conditional hex dump
