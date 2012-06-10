@@ -74,7 +74,17 @@ void wpa_debug_print_timestamp(void);
 #define MSG_WARNING ANDROID_LOG_WARN
 #define MSG_ERROR   ANDROID_LOG_ERROR
 
+#ifndef LOG_NDEBUG
+#define LOG_NDEBUG 1
+#endif
+
+#if (LOG_NDEBUG)
+#define wpa_printf(lvl,...) if (lvl > ANDROID_LOG_VERBOSE) \
+            __android_log_print(lvl, LOG_TAG, ## __VA_ARGS__)
+#else
 #define wpa_printf(lvl,...) __android_log_print(lvl, LOG_TAG, ## __VA_ARGS__)
+#endif
+
 #define perror(msg) android_perror(msg)
 void android_perror(const char* msg);
 
