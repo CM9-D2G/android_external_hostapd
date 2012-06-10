@@ -1901,7 +1901,7 @@ static int hostapd_init_iface(struct hostapd_iface *iface, const char *config_fi
  */
 static void hostapd_deinit_iface(struct hostapd_iface *iface)
 {
-	int j;
+	unsigned int j;
 
 	wpa_printf(MSG_DEBUG, "**************%s**************", __func__);
 
@@ -1933,7 +1933,8 @@ static void hostapd_deinit_iface(struct hostapd_iface *iface)
  */
 int hostapd_reset_iface(struct hostapd_iface *iface, const char *config_fname, int deauth_stas)
 {
-	int j, ret;
+	int ret;
+	unsigned int j;
 
 	if (!iface)
 		return -1;
@@ -2006,7 +2007,7 @@ int hostapd_start_iface(struct hostapd_iface *iface, const char *config_fname)
  */
 int hostapd_stop_iface_driver(struct hostapd_iface *iface)
 {
-	int i;
+	unsigned int i;
 
 	wpa_printf(MSG_DEBUG, "***********%s********", __func__);
 

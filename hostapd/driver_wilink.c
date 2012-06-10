@@ -71,6 +71,7 @@
 #include "wpa.h"
 #include "wpa_auth_i.h"
 #include "regulatory.h"
+#include "beacon.h"
 
 #include <signal.h>
 #ifndef ANDROID
