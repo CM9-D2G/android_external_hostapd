@@ -462,7 +462,7 @@ int hostapd_ctrl_iface_init(struct hostapd_data *hapd)
 	if (fname == NULL)
 		goto fail;
 
-wpa_printf(MSG_DEBUG, "%s: fname=%s", __FUNCTION__, fname);
+	wpa_printf(MSG_DEBUG, "%s: socket=%s", __FUNCTION__, fname);
 
 	os_strlcpy(addr.sun_path, fname, sizeof(addr.sun_path));
 	if (bind(s, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
