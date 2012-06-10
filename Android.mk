@@ -575,19 +575,6 @@ OBJS_c = \
 
 ########################
 
-# two module names, because "hostapd" cannot be built
-# with subfolder hostapd objects, filesystem restriction
-# choose the module name you want in your device config
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := Hostapd
-LOCAL_MODULE_TAGS := optional
-LOCAL_SHARED_LIBRARIES := libc libcutils libcrypto libssl
-LOCAL_CFLAGS := $(AP_CFLAGS)
-LOCAL_SRC_FILES := $(OBJS)
-LOCAL_C_INCLUDES := $(C_INCLUDES)
-include $(BUILD_EXECUTABLE)
-
 include $(CLEAR_VARS)
 LOCAL_MODULE := hostap
 LOCAL_MODULE_TAGS := optional
