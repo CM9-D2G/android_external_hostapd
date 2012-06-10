@@ -3,7 +3,7 @@ ifneq ($(BOARD_SOFTAP_DEVICE),)
 LOCAL_PATH := $(call my-dir)
 
 ifndef AP_CFLAGS
-AP_CFLAGS = -MMD -O2 -Wall -g
+AP_CFLAGS = -MMD -O2 -Wall -g -Wno-unused
 endif
 
 # define HOSTAPD_DUMP_STATE to include SIGUSR1 handler for dumping state to
